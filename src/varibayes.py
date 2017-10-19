@@ -8,7 +8,7 @@ class VariationalInferenceMF(object):
         self.args = args
         self.params = []
         self.samples = samples
-        self.opt = adam.Adam(self.evd_grad_evd, **kwargs)
+        self.opt = adam.Adam(self.evd_grad_evd_rao_blackwell, **kwargs)
 
     @property
     def mus(self):
@@ -55,6 +55,17 @@ class VariationalInferenceMF(object):
         grad = self.gradlogdistn(params, zs, n)
         return np.mean(evd), - np.mean(grad * evd[:,None], axis=0) 
 
+    def evd_grad_evd_rao_blackwell(self, params, n=None):
+        zs = self.sampledistn(n, params)
+        evd = self.evidence(params, zs, n)
+        grad = self.gradlogdistn(params, zs, n)
+
+        grad_evd = grad * evd[:,None]
+        mean_grad_evd = grad_evd.mean(0)
+        mean_grad = grad.mean(0)
+        a = np.mean((grad_evd-mean_grad_evd)*(grad-mean_grad),0)/grad.std(0)**2
+
+        return np.mean(evd), - (mean_grad_evd - a * mean_grad)
+
     def fit(self, p0, **kwargs):
-        self.params = p0.copy()
-        self.params = self.opt.optimize(self.params, **kwargs)
+        self.params = self.opt.optimize(p0.copy(), **kwargs)
