@@ -13,7 +13,7 @@ import numpy as np
 import numexpr as nu
 import varibayes
 
-x = np.linspace(-1,1,100)
+x = np.linspace(-1,1,400)
 
 def loglikelihood(params, data, x=x):
     sigma = p[0]
@@ -25,7 +25,7 @@ def res(params, data, x=x):
     return mod - data
 
 if __name__=='__main__':
-
+    import matplotlib.pyplot as plt
     # Make some interesting data
     zz = [-1, -0.4, 0, 0.4, 1.]
     pp = np.poly(zz)
@@ -38,8 +38,10 @@ if __name__=='__main__':
     data = y + sigma*np.random.randn(len(y))
 
     vb = varibayes.VariationalInferenceMF(loglikelihood, args=(data,),
-                                          samples=100)
+                                          samples=400)
 
-    p0 = np.hstack([sigma, pp/ptp + 0.5*np.random.randn(len(pp)),
-                    10*np.random.rand(len(p))])
-    vb.fit(p0.copy(), iprint=100, tol=1E-10, itn=5000)
+    p0 = np.hstack([sigma, 0*pp/ptp + 0.01*np.random.randn(len(pp)),
+                    0.0001*np.random.rand(len(p))])
+    vb.fit_rao_blackwell(p0.copy(), iprint=100, tol=1E-7, itn=20000)
+    plt.plot(vb.opt_rao_blackwell.obj_list)
+    plt.show()
