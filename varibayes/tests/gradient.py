@@ -1,7 +1,5 @@
-import sys
-sys.path.append('../')
 import numpy as np
-import varibayes
+import varibayes.infer as infer
 
 
 def gradtest(vb, p0, h=1E-8, nsamples=12):
@@ -21,7 +19,7 @@ def gradtest(vb, p0, h=1E-8, nsamples=12):
 
 if __name__=='__main__':
 
-    vb = varibayes.VariationalInferenceMF(lambda x: x, samples=1)
+    vb = infer.VariationalInferenceMF(lambda x: x, samples=1)
     ps = []
     print("Running gradient test:")
     for i in range(10):
