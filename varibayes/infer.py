@@ -20,21 +20,21 @@ class VariationalInferenceMF(object):
     
     def sampledistn(self, n=None, params=None):
         params = params if params is not None else self.params
-        mus, sigmas = params[:len(params)/2], params[len(params)/2:]
+        mus, sigmas = params[:len(params)//2], params[len(params)//2:]
         return np.random.normal(mus, np.abs(sigmas), 
                                 size=(n or self.samples, len(mus)))
 
     def logdistn(self, params=None, zs=None, n=None):
         zs = zs if zs is not None else self.sampledistn(n, params)
         params = params if params is not None else self.params
-        m, s = params[:len(params)/2], params[len(params)/2:]
+        m, s = params[:len(params)//2], params[len(params)//2:]
         r = (zs - m)/s
         return - np.sum(r*r + np.log(2*np.pi*s*s), axis=1)/2.
 
     def gradlogdistn(self, params=None, zs=None, n=None):
         zs = zs if zs is not None else self.sampledistn(n, params)
         params = params if params is not None else self.params
-        mus, sigmas = params[:len(params)/2], params[len(params)/2:]
+        mus, sigmas = params[:len(params)//2], params[len(params)//2:]
         r = (zs - mus)/sigmas
         return np.concatenate([r/sigmas, (r*r-1)/sigmas], 1)
 
