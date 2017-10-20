@@ -6,7 +6,7 @@ setup(name='varibayes',
       author_email='colin.clement@gmail.com',
       url='https://github.com/colinclement/varibayes',
       version='0.0.1',
-      platforms='osx, posix, linux, windows',
+      platforms='any',
       install_requires=[
           "numpy>=1.10.4"
       ],
@@ -41,4 +41,5 @@ setup(name='varibayes',
           'Topic :: Scientific/Engineering :: Information Analysis',
           'Topic :: Scientific/Engineering :: Mathematics',
       ],
+      keywords='variational bayes inference',
 )
