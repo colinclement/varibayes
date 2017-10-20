@@ -10,7 +10,6 @@ Minimal working example of using VariationalInference to fit polynomials
 import sys
 sys.path.append('../')
 import numpy as np
-import numexpr as nu
 import varibayes
 
 x = np.linspace(-1,1,400)
