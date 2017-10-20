@@ -1,8 +1,30 @@
+"""
+gradient.py
+
+author: Colin Clement
+date: 2017-10-18
+
+A module for testing the gradient of the log of the variational distribution.
+This is a critical check for implementing new and more complex trial
+distributions.
+"""
+
 import numpy as np
 import varibayes.infer as infer
 
 
 def gradtest(vb, p0, h=1E-8, nsamples=12):
+    """
+    Test gradient in VariationInference module against finite differences
+    Args:
+        vb (VariationalInferenceMF): variational inference module
+        p0 (array_like): value of parameters
+        (optional)
+        h (float): finite difference step size
+        n (int): number of samples in gradient estimation
+    Returns:
+        gradient from vb, finite difference gradient
+    """
     vb.params = p0
     vb.samples = nsamples
     zs = vb.sampledistn()
