@@ -11,7 +11,7 @@ setup(name='varibayes',
           "numpy>=1.10.4"
       ],
 
-      packages=['varibayes'],
+      packages=['varibayes', 'varibayes.opt', 'varibayes.tests'],
 
       description='A toolbox for performing variational Bayesian inference',
       long_description="""\
