@@ -1,5 +1,5 @@
 import numpy as np
-import adam
+import varibayes.opt.adagrad as adagrad
 
 
 class VariationalInferenceMF(object):
@@ -8,7 +8,7 @@ class VariationalInferenceMF(object):
         self.args = args
         self.params = []
         self.samples = samples
-        self.opt = adam.Adam(self.evd_grad_evd_rao_blackwell, **kwargs)
+        self.opt = adagrad.Adagrad(self.evd_grad_evd_rao_blackwell, **kwargs)
 
     @property
     def mus(self):
