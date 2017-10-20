@@ -14,7 +14,7 @@ import numpy as np
 class Adadelta(object):
     def __init__(self, obj_grad_obj, rho=0.9, eps=1e-6):
         """
-        ADAM stochastic gradient descent optimizer.
+        Adadelta stochastic gradient descent optimizer.
         input:
             obj_grad_obj: Function which takes D (int) parameters
             and returns (objective, grad_objective), can take other args
@@ -33,7 +33,7 @@ class Adadelta(object):
         
     def step(self, params, args = ()):
         """
-        Take one step of ADAM SGD.
+        Take one step of Adadelta SGD.
         input:
             params: array of D floats
             args: tuple of extra arguments to obj_grad_obj
@@ -45,14 +45,14 @@ class Adadelta(object):
         self.m[:] = self.rho * self.m + (1 - self.rho) * delta * delta
         return delta, obj
     
-    def optimize(self, p0, itn = 1000, tol = 1E-2,
+    def optimize(self, p0, itn = 1000, tol = 5E-8,
                  iprint = 0, args = ()):
         """
-        Run ADAM SGD.
+        Run Adadelta SGD.
         input:
             p0: array of D floats to start optimization
             itn : int number of iterations
-            tol : change in objective below which algorithm terminates
+            tol : relative change in objective below which algorithm terminates
             iprint : int for how often to print status of algorithm
             args : tuple of extra arguments to obj_grad_obj
         """
@@ -72,4 +72,4 @@ class Adadelta(object):
                 break
             self.obj_list += [obj]
             obj0 = obj
-        return p0  
+        return p0

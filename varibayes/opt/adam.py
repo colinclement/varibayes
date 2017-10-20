@@ -34,9 +34,7 @@ class Adam(object):
         self.t = 0
         self.obj_list = []
         self.m = np.zeros(len(p0))
-        #self.mh = np.zeros(len(p0))
         self.v = np.zeros(len(p0))
-        #self.vh = np.zeros(len(p0))
         self.a = np.zeros(len(p0))
         
     def step(self, params, args = ()):
